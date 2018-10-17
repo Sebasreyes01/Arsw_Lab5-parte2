@@ -11,11 +11,13 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
-    private final Map<Tuple<String,String>, Blueprint> blueprints=new HashMap<>();
+//    private final Map<Tuple<String,String>, Blueprint> blueprints=new HashMap<>();
+    private final Map<Tuple<String,String>, Blueprint> blueprints=new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data
@@ -34,14 +36,19 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
 
     }
 
+//    @Override
+//    public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+//        if (blueprints.containsKey(new Tuple<>(bp.getAuthor(),bp.getName()))){
+//            throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
+//        }
+//        else{
+//            blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
+//        }
+//    }
+
     @Override
-    public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
-        if (blueprints.containsKey(new Tuple<>(bp.getAuthor(),bp.getName()))){
-            throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
-        }
-        else{
-            blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
-        }
+    public void saveBlueprint(Blueprint bp) {
+        blueprints.putIfAbsent(new Tuple<>(bp.getAuthor(),bp.getName()),bp);
     }
 
     @Override

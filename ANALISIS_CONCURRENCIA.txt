@@ -1,0 +1,7 @@
+1. ¿Qué condiciones de carrera se podrían presentar?
+   Se presenta una condición de carrera al tratar de acceder al Map blueprints en la clase InMemoryBlueprintPersistence, la solución fue usar un ConcurrentHashMap.
+   También se presenta condición de carrera si se intentan agregar 2 blueprint iguales, la 
+   solución fue usar el método putIfAbsent del ConcurrentHashMap.
+
+2. ¿Cuáles son las respectivas regiones críticas?
+    Las regiones críticas son los métodos saveBlueprint y updateBlueprint.
