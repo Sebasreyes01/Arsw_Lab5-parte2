@@ -2,6 +2,7 @@ package edu.eci.arsw.blueprints.services;
 
 import edu.eci.arsw.blueprints.filters.BlueprintFilter;
 import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
@@ -65,6 +66,10 @@ public class BlueprintServices {
             blueprints.add(bpf.filter(bp));
         }
         return blueprints;
+    }
+
+    public void updateBlueprint(String author, String bpname, Point[] points) throws BlueprintNotFoundException{
+        bpp.updateBlueprint(author, bpname, points);
     }
 
 

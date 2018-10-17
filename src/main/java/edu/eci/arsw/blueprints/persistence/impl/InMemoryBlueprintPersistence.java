@@ -81,5 +81,11 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence {
         }
     }
 
+    @Override
+    public void updateBlueprint(String author, String bpname, Point[] points) throws BlueprintNotFoundException {
+        Blueprint bp = getBlueprint(author, bpname);
+        bp.setPoints(points);
+        blueprints.replace(new Tuple<>(bp.getAuthor(), bp.getName()),bp);
+    }
 
 }
